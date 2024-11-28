@@ -7,22 +7,19 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Affichage message flash de type "success" -->
+            <!-- Message flash -->
             @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
+            <div class="bg-green-500 text-white p-4 rounded-lg mt-6 mb-6 text-center">
+                {{ session('success') }}
+            </div>
+            @endif
+            <!-- Message d'erreur -->
+            @if (session('error'))
+                <div class="bg-red-500 text-white p-4 rounded-lg mt-6 mb-6 text-center">
+                    {{ session('error') }}
                 </div>
             @endif
-            <!-- Affichage message flash de type "error" -->
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="list-unstyled text-start m-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
@@ -41,9 +38,15 @@
                                 <h2 class="text-2xl font-bold">{{ $article->title }}</h2>
                                 <p class="text-gray-700">{{ substr($article->content, 0, 30) }}...</p>
                             </div>
+                            <div class="text-right m-5">
+                                <a href="{{ route('articles.edit', $article->id) }}" class="text-red-500 hover:text-red-700">Modifier</a>
+                            </div>
                         </div>
                     @endforeach
                 </div>
+            </div>
+            <div class="mt-6 flex justify-center">
+                {{ $articles->links() }}
             </div>
         </div>
     </div>

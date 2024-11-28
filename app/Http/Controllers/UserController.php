@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $articles = Article::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $articles = Article::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(4);
 
         return view('dashboard', ['articles' => $articles]);
     }
@@ -77,5 +77,70 @@ class UserController extends Controller
 
         // On redirige l'utilisateur vers la liste des articles
         return redirect('/dashboard')->with('success','L\'article a bien été créé');
+    }
+
+    public function edit(Article $article)
+    {
+        if ($article->user_id !== Auth::user()->id) {
+            return redirect()->route('dashboard')->with('error', 'Vous n\'avez pas le droit d\'accéder à cet article !');
+        }
+        
+        $categories = Category::all();
+
+        return view('articles.edit', [
+            'article' => $article,
+            'categories' => $categories
+        ]);
+    }
+
+    public function update(Request $request, Article $article)
+    {
+        // Validation des paramètres du formulaire de modification de l'article 
+
+        $request->validate(
+            [
+                'title' => 'required|string|max:255',
+                'content' => 'required|string|max:5000',
+                'draft' => '',
+                'categories' => 'required',
+            ],
+            [
+                'required' => 'Le champ :attribute est obligatoire.',
+                'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+                'max' => 'Le champ :attribute ne peut pas dépasser :max caractères.',
+            ],
+            [
+                'title' => 'title',
+                'content' => 'content',
+                'draft' => 'draft',
+                'categories' => 'categories',
+            ]
+        );
+
+        if ($article->user_id !== Auth::user()->id) {
+            return redirect()->route('dashboard')->with('error', 'Vous n\'avez pas le droit d\'accéder à cet article !');
+        }
+
+        $article_categories = $request->only(['categories']);
+
+        // Titre
+
+        $data['title'] = $request->title;
+        
+        // Contenu 
+
+        $data['content'] = $request->content;
+
+
+        $data['draft'] = isset($data['draft']) ? 1 : 0;
+
+
+        $article->update($data);
+
+        // Associer l'article à une/plusieurs catégorie une fois modifié
+
+        $article->categories()->sync($article_categories['categories']);
+
+        return redirect()->route('dashboard')->with('success', 'Article mis à jour !');
     }
 }
