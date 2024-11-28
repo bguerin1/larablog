@@ -28,6 +28,7 @@
 
             <div class="mt-3 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+
                     <!-- Liste des articles de l'utilisateur connecté  --> 
                     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         {{ __('Mes articles') }}
@@ -38,14 +39,20 @@
                                 <h2 class="text-2xl font-bold">{{ $article->title }}</h2>
                                 <p class="text-gray-700">{{ substr($article->content, 0, 30) }}...</p>
                             </div>
-                            <div class="text-right m-5">
-                                <a href="{{ route('articles.edit', $article->id) }}" class="text-red-500 hover:text-red-700">Modifier</a>
+                            <div class="flex flex-align">
+                                <div class="text-right m-5">
+                                    <a href="{{ route('articles.edit', $article->id) }}" class="text-red-500 hover:text-red-700">Modifier</a>
+                                </div>
+                                <div class="text-right m-5">
+                                    <a href="{{ route('articles.remove', $article->id) }}" class="text-red-500 hover:text-red-700">Supprimer</a>
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
-            <div class="mt-6 flex justify-center">
+            <!--mt-6 flex justify-center-->
+            <div class="mt-3">
                 {{ $articles->links() }}
             </div>
         </div>
