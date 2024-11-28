@@ -28,6 +28,23 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+
+            <div class="mt-3 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <!-- Liste des articles de l'utilisateur connecté  --> 
+                    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                        {{ __('Mes articles') }}
+                    </h2>
+                    @foreach($articles as $article)
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
+                            <div class="p-6 text-gray-900">
+                                <h2 class="text-2xl font-bold">{{ $article->title }}</h2>
+                                <p class="text-gray-700">{{ substr($article->content, 0, 30) }}...</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>

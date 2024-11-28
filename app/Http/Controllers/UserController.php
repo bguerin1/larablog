@@ -11,11 +11,11 @@ class UserController extends Controller
 {
     public function index()
     {
-        // On récupère l'utilisateur connecté.
         $user = Auth::user();
 
-        // On retourne la vue.
-        return view('dashboard', []);
+        $articles = Article::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+
+        return view('dashboard', ['articles' => $articles]);
     }
 
     public function create()
