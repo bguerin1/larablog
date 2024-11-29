@@ -44,7 +44,7 @@
                                     <a href="{{ route('articles.edit', $article->id) }}" class="text-red-500 hover:text-red-700">Modifier</a>
                                 </div>
                                 <div class="text-right m-5">
-                                    <a href="{{ route('articles.remove', $article->id) }}" class="text-red-500 hover:text-red-700">Supprimer</a>
+                                    <a href="{{ route('articles.remove', $article->id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
                                 </div>
                             </div>
                         </div>

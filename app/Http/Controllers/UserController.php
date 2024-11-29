@@ -143,4 +143,19 @@ class UserController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Article mis à jour !');
     }
+
+    public function remove(Article $article){
+        if ($article->user_id !== Auth::user()->id) {
+            return redirect()->route('dashboard')->with('error', 'Vous n\'avez pas le droit de supprimer un article qui ne vous appartiens pas !');
+        }
+
+        // Suppression des catégories liées à l'article pour garder le RESTRICT en base de données
+
+        $article->categories()->detach();
+
+        // Suppression de l'article 
+
+        $article->delete();
+        return redirect()->route('dashboard')->with('success', 'L\'article a bien été supprimé !');
+    }
 }

@@ -29,7 +29,6 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/articles/{article}/remove', [UserController::class, 'remove'])->name('articles.remove');
 
-
 });
 
 require __DIR__.'/auth.php';
