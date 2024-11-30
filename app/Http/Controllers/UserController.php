@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $articles = Article::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(4);
+        $articles = Article::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(6);
 
         return view('dashboard', ['articles' => $articles]);
     }
@@ -65,7 +65,8 @@ class UserController extends Controller
 
         // Gestion du draft
         
-        $data['draft'] = isset($data['draft']) ? 1 : 0;
+        $data['draft'] = isset($request->draft) ? 1 : 0;
+
 
         // Création de l'article 
        
@@ -132,7 +133,7 @@ class UserController extends Controller
         $data['content'] = $request->content;
 
 
-        $data['draft'] = isset($data['draft']) ? 1 : 0;
+        $data['draft'] = isset($request->draft) ? 1 : 0;
 
 
         $article->update($data);
