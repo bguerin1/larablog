@@ -41,7 +41,11 @@
                                 @foreach($article->categories as $category)
                                     <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 mt-3">{{$category->name}}</span>
                                 @endforeach
+                                @if($article->draft == 1)
+                                    <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500 mt-3">Brouillon</span>
+                                @endif
                             </div>
+
                             <p class="text-gray-700 mt-3">{{ substr($article->content, 0, 30) }}...</p>
                         </div>
                         <div class="flex flex-align">
