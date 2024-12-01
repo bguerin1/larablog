@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
@@ -29,9 +30,13 @@ Route::middleware('auth')->group(function () {
     // Suppression des articles 
     
     Route::get('/articles/{article}/remove', [UserController::class, 'remove'])->name('articles.remove');
+
+    // Ajout de commentaires
+
+    Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__.'/auth.php'; 
 
 // Partie publique 
 
