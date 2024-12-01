@@ -23,9 +23,6 @@ class PublicController extends Controller
 
     public function show(User $user, Article $article)
     {
-        // $user est l'utilisateur de l'article
-        // $article est l'article à afficher
-        
         // Vérification de la publication de l'article 
 
         if($article->draft == 1){
@@ -36,8 +33,5 @@ class PublicController extends Controller
             'article' => $article,
             'user' => $user
         ]);
-
-        // Je vous laisse faire le code
-        // N'oubliez pas de vérifier que l'article est publié (draft == 0)
     }
 }
