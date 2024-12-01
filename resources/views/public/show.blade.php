@@ -12,8 +12,14 @@
                     </h2>
                 </div>
 
-                <div class="text-gray-500 text-sm mt-2">
+                <div class="text-gray-500 text-sm mt-3">
                     Publié le {{ $article->created_at->format('d/m/Y') }} par <a href="{{ route('public.index', $article->user->id) }}">{{ $article->user->name }}</a>
+                </div>
+
+                <div class="flex flex-inline mt-2">
+                    @foreach($article->categories as $category)
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 mt-3">{{$category->name}}</span>
+                    @endforeach
                 </div>
 
                 <div>
@@ -46,20 +52,21 @@
                     <!-- Liste des commentaires --> 
 
                     <div style="height:350px; overflow-y:scroll;">
-                        @foreach ($article->comments as $comment)
-                            @if($comment == null)
-                                <div class="bg-white mt-3 p-6">
-                                    <p class="text-gray-700">Aucun commentaire pour le moment.</p>
-                                </div>
-                            @endif
+                        @if(count($article->comments) == 0)
                             <div class="bg-white mt-3 p-6">
-                                <div class="flex flex-inline">
-                                    <p class="text-gray-700 mb-3 font-semibold mr-2">{{$comment->user->name}} </p>
-                                    <p>{{$comment->created_at->format('d/m/Y')}} à {{$comment->created_at->format('H:i')}}</p>
-                                </div>
-                                <p class="text-gray-700">{{$comment->content}}</p>
+                                <p class="text-gray-700">Aucun commentaire pour le moment.</p>
                             </div>
-                        @endforeach
+                        @else
+                            @foreach ($article->comments as $comment)
+                                <div class="bg-white mt-3 p-6">
+                                    <div class="flex flex-inline">
+                                        <p class="text-gray-700 mb-3 font-semibold mr-2">{{$comment->user->name}} </p>
+                                        <p>{{$comment->created_at->format('d/m/Y')}} à {{$comment->created_at->format('H:i')}}</p>
+                                    </div>
+                                    <p class="text-gray-700">{{$comment->content}}</p>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
 
                     <!-- Ajout d'un commentaire -->

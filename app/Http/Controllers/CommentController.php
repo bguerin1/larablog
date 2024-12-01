@@ -37,8 +37,8 @@ class CommentController extends Controller
 
             $article = Article::find($articleId);
 
-            if($article == null){
-                
+            if($article == null || $article->draft == 1){
+
                 // Erreur générale pour éviter d'en dire trop 
                 return redirect()->route('dashboard')->with('error', 'Cet article n\'est pas disponible !');
             }

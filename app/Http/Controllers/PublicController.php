@@ -29,9 +29,10 @@ class PublicController extends Controller
             return redirect()->route('dashboard')->with('error', 'Cet article n\'existe pas !');
         }
 
+
         return view('public.show', [
             'article' => $article,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 }

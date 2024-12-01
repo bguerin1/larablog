@@ -31,7 +31,7 @@ class UserController extends Controller
         $request->validate(
             [
                 'title' => 'required|string|max:255',
-                'content' => 'required|string|max:10000',
+                'content' => 'required|string',
                 'draft' => '',
                 'categories' => 'required',
             ],
@@ -101,7 +101,7 @@ class UserController extends Controller
         $request->validate(
             [
                 'title' => 'required|string|max:255',
-                'content' => 'required|string|max:10000',
+                'content' => 'required|string',
                 'draft' => '',
                 'categories' => 'required',
             ],
