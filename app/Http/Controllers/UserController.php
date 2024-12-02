@@ -159,4 +159,6 @@ class UserController extends Controller
         $article->delete();
         return redirect()->route('dashboard')->with('success', 'L\'article a bien été supprimé !');
     }
+
+    
 }

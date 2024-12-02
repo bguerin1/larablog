@@ -30,10 +30,16 @@ Route::middleware('auth')->group(function () {
     // Suppression des articles 
     
     Route::get('/articles/{article}/remove', [UserController::class, 'remove'])->name('articles.remove');
+    
+    // Like des articles 
+    
+    Route::get('/articles/{article}/like/', [PublicController::class, 'like'])->name('article.like');
+
 
     // Ajout de commentaires
 
     Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+
 });
 
 require __DIR__.'/auth.php'; 

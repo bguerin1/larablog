@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
@@ -29,10 +30,27 @@ class PublicController extends Controller
             return redirect()->route('dashboard')->with('error', 'Cet article n\'existe pas !');
         }
 
-
         return view('public.show', [
             'article' => $article,
             'user' => $user,
         ]);
     }
+
+    public function like(Article $article){
+        try{
+            // Vérification de la publication de l'article 
+
+            if($article->draft == 1){
+                return redirect()->route('dashboard')->with('error', 'Cet article est indisponible !');
+            }
+
+            $article->likes += 1;
+            $article->save();
+            return redirect()->back()->with('success','Like ajouté avec succès !');
+        }
+        catch(Exception $e){
+            return redirect()->back()->with('error','L\'ajout du like a échoué !');
+        }
+    }
+
 }
