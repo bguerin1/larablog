@@ -6,9 +6,7 @@ use App\Http\Controllers\PublicController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PublicController::class, 'home'])->name('home');
 
 
 Route::middleware('auth')->group(function () {

@@ -53,4 +53,12 @@ class PublicController extends Controller
         }
     }
 
+    public function home(){
+        $articles = Article::where('draft', 0)->orderBy('likes', 'desc')->paginate(6);
+
+        return view('home', [
+            'articles' => $articles,
+        ]);
+    }
+
 }
