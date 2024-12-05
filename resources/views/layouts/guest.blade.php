@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
+    <body class="font-sans text-gray-900 antialiased bg-gray-100 dark:bg-gray-900">
         @auth
             @include('layouts.navigation')
         @endauth
@@ -46,6 +46,9 @@
             </nav>
             @endif
         @endguest 
-       {{$slot}}
+
+        <div class="w-full sm:w-[100%] md:w-[80%] lg:w-[70%] xl:w-[70%] m-auto">
+            {{$slot}}
+        </div>
     </body>
 </html>

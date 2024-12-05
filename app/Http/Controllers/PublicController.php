@@ -55,10 +55,19 @@ class PublicController extends Controller
 
     public function home(){
         $articles = Article::where('draft', 0)->orderBy('likes', 'desc')->paginate(6);
+        $categories = Category::all();
 
         return view('home', [
             'articles' => $articles,
+            'categories' => $categories
         ]);
     }
+
+    public function filter(Request $request){
+        $filter_categories = $request->only(['categories']);
+        dd($filter_categories);
+        $articles = Article::where('draft', 0)->paginate(6);
+
+    }   
 
 }

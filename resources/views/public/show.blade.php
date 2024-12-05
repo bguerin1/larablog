@@ -19,7 +19,7 @@
                 </div>
             @endif
 
-            <div class="bg-white mt-3 p-6">
+            <div class="bg-white mt-3 p-6 rounded-lg">
                 <div class="flex justify-between">
                     <div>
                         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -62,7 +62,7 @@
         </div>
         @auth
             <div class="max-w-full  ml-16 mt-2 px-6 py-4 dark:bg-gray-800 overflow-hidden sm:rounded-lg">
-                <div class="bg-white mt-3 p-6">
+                <div class="bg-white mt-3 p-6 rounded-lg">
                     <div>
                         <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Commentaires</h3>
                     </div>
@@ -76,7 +76,7 @@
                             </div>
                         @else
                             @foreach ($article->comments as $comment)
-                                <div class="bg-white mt-3 p-6">
+                                <div class="mt-3 p-6 bg-gray-100 rounded-lg">
                                     <div class="flex flex-inline">
                                         <p class="text-gray-700 mb-3 font-semibold mr-2">{{$comment->user->name}} </p>
                                         <p>{{$comment->created_at->format('d/m/Y')}} à {{$comment->created_at->format('H:i')}}</p>

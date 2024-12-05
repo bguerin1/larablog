@@ -31,12 +31,17 @@ Route::middleware('auth')->group(function () {
     
     // Like des articles 
     
-    Route::get('/articles/{article}/like/', [PublicController::class, 'like'])->name('article.like');
+    Route::get('/articles/{article}/like/', [PublicController::class, 'like'])->name('article.like')->middleware('throttle:3,1');
+
+    // Filtre de catégories des articles 
+
+    Route::get('/articles/filter/', [PublicController::class, 'filter'])->name('articles.filter');
+
 
 
     // Ajout de commentaires
 
-    Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('/comments/store', [CommentController::class, 'store'])->middleware('throttle:3,1')->name('comments.store');
 
 });
 
