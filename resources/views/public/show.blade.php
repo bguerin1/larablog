@@ -3,7 +3,7 @@
         <div class="max-w-full  ml-16 mt-6 px-6 py-4 dark:bg-gray-800 overflow-hidden sm:rounded-lg">
     
             <div>
-                <a href="/{{$user->id}}">← Retour à la liste des articles</a>
+                <a href="/">← Retour à la liste des articles</a>
             </div>
 
             <!-- Message flash -->
@@ -55,7 +55,7 @@
 
                 <div>
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <p class="text-gray-700 dark:text-gray-300">{{ $article->content }}</p>
+                        <p class="text-gray-700 dark:text-gray-300">{!! nl2br(e($article->content)) !!}</p>
                     </div>
                 </div>
             </div>

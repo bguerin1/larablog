@@ -65,8 +65,16 @@ class PublicController extends Controller
 
     public function filter(Request $request){
         $filter_categories = $request->only(['categories']);
-        dd($filter_categories);
-        $articles = Article::where('draft', 0)->paginate(6);
+
+        $articles = Article::whereHas('categories',fn($q)=>$q->whereIn('id', $filter_categories['categories']))->paginate(6);
+        $categories = Category::all();
+
+
+        return view('home', [
+            'articles' => $articles,
+            'categories' => $categories
+
+        ]);        
 
     }   
 
