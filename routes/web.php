@@ -37,8 +37,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/articles/filter/', [PublicController::class, 'filter'])->name('articles.filter');
 
-
-
     // Ajout de commentaires
 
     Route::post('/comments/store', [CommentController::class, 'store'])->middleware('throttle:3,1')->name('comments.store');

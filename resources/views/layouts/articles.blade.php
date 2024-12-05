@@ -48,13 +48,8 @@
         @endguest 
 
         <div class="w-full sm:w-[100%] md:w-[80%] lg:w-[70%] xl:w-[70%] m-auto">
-            <div class="min-h-screen flex flex-col pt-6 sm:pt-0 justify-center items-center bg-gray-100 dark:bg-gray-900">
-                <div>
-                    <a href="/">
-                        <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                    </a>
-                </div>
-                <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 overflow-hidden sm:rounded-lg">
+            <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+                <div class="max-w-full ml-6 mt-6 px-6 py-4 dark:bg-gray-800 overflow-hidden sm:rounded-lg">
                     {{$slot}}
                 </div>
             </div>

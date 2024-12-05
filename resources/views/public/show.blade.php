@@ -1,110 +1,104 @@
-<x-guest-layout>
-    <div class="min-h-screen flex flex-col pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-        <div class="max-w-full  ml-16 mt-6 px-6 py-4 dark:bg-gray-800 overflow-hidden sm:rounded-lg">
-    
+<x-articles-layout>
+    <div>
+        <a href="/{{$user->id}}">← Retour à la liste des articles</a>
+    </div>
+
+    <!-- Message flash -->
+    @if (session('success'))
+    <div class="bg-green-500 text-white p-4 rounded-lg mt-6 mb-6 text-center">
+        {{ session('success') }}
+    </div>
+    @endif
+    <!-- Message d'erreur -->
+    @if (session('error'))
+        <div class="bg-red-500 text-white p-4 rounded-lg mt-6 mb-6 text-center">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <div class="bg-white mt-3 p-6 rounded-lg flex justify-between">
+        <div>
             <div>
-                <a href="/">← Retour à la liste des articles</a>
-            </div>
-
-            <!-- Message flash -->
-            @if (session('success'))
-            <div class="bg-green-500 text-white p-4 rounded-lg mt-6 mb-6 text-center">
-                {{ session('success') }}
-            </div>
-            @endif
-            <!-- Message d'erreur -->
-            @if (session('error'))
-                <div class="bg-red-500 text-white p-4 rounded-lg mt-6 mb-6 text-center">
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            <div class="bg-white mt-3 p-6 rounded-lg">
-                <div class="flex justify-between">
-                    <div>
-                        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                            {{ $article->title }}
-                        </h2>
-                    </div>
-
-                    <div>
-                        @auth
-                            <a href="{{ route('article.like', $article->id) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" clip-rule="evenodd" />
-                                </svg>
-                                @if($article->likes == 0)
-                                    <span>0</span>
-                                @endif
-                                <span>{{$article->likes}}</span>
-                            </a>
-                        @endauth
-                    </div>
-                </div>
-
-
-                <div class="text-gray-500 text-sm mt-3">
-                    Publié le {{ $article->created_at->format('d/m/Y') }} par <a href="{{ route('public.index', $article->user->id) }}">{{ $article->user->name }}</a>
-                </div>
-
-                <div class="flex flex-inline mt-2">
-                    @foreach($article->categories as $category)
-                        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 mt-3">{{$category->name}}</span>
-                    @endforeach
-                </div>
-
                 <div>
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <p class="text-gray-700 dark:text-gray-300">{!! nl2br(e($article->content)) !!}</p>
-                    </div>
+                    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mr-5">
+                        {{ $article->title }}
+                    </h2>
+                </div>
+            </div>
+
+
+            <div class="text-gray-500 text-sm mt-3">
+                Publié le {{ $article->created_at->format('d/m/Y') }} par <a href="{{ route('public.index', $article->user->id) }}">{{ $article->user->name }}</a>
+            </div>
+
+            <div class="flex flex-inline mt-2">
+                @foreach($article->categories as $category)
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 mt-3">{{$category->name}}</span>
+                @endforeach
+            </div>
+
+            <div>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <p class="text-gray-700 dark:text-gray-300">{!! nl2br(e($article->content)) !!}</p>
                 </div>
             </div>
         </div>
-        @auth
-            <div class="max-w-full  ml-16 mt-2 px-6 py-4 dark:bg-gray-800 overflow-hidden sm:rounded-lg">
-                <div class="bg-white mt-3 p-6 rounded-lg">
-                    <div>
-                        <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Commentaires</h3>
-                    </div>
-
-                    <!-- Liste des commentaires --> 
-
-                    <div style="height:350px; overflow-y:scroll;">
-                        @if(count($article->comments) == 0)
-                            <div class="bg-white mt-3 p-6">
-                                <p class="text-gray-700">Aucun commentaire pour le moment.</p>
-                            </div>
-                        @else
-                            @foreach ($article->comments as $comment)
-                                <div class="mt-3 p-6 bg-gray-100 rounded-lg">
-                                    <div class="flex flex-inline">
-                                        <p class="text-gray-700 mb-3 font-semibold mr-2">{{$comment->user->name}} </p>
-                                        <p>{{$comment->created_at->format('d/m/Y')}} à {{$comment->created_at->format('H:i')}}</p>
-                                    </div>
-                                    <p class="text-gray-700">{{$comment->content}}</p>
-                                </div>
-                            @endforeach
-                        @endif
-                    </div>
-
-                    <!-- Ajout d'un commentaire -->
-
-                    <div>
-                        <form action="{{ route('comments.store') }}" method="post" class="mt-6">
-                            @csrf
-                            <input type="hidden" name="articleId" value="{{ $article->id }}">
-                            <div class="p-6 pt-0 text-gray-900 ">
-                                <textarea rows="5" name="content" id="content" placeholder="Contenu du commentaires" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 resize-none"></textarea>
-                            </div>
-                            <div class="p-6 pt-0 text-gray-900 ">
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    Publier
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endauth
+        <div>
+            @auth
+                <a href="{{ route('article.like', $article->id) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" clip-rule="evenodd" />
+                    </svg>
+                    @if($article->likes == 0)
+                        <span>0</span>
+                    @endif
+                    <span>{{$article->likes}}</span>
+                </a>
+            @endauth
+        </div>
     </div>
+    @auth
+        <div class="bg-white mt-5 p-6 rounded-lg">
+            <div>
+                <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Commentaires</h3>
+            </div>
+
+            <!-- Liste des commentaires --> 
+
+            <div style="height:350px; overflow-y:scroll;">
+                @if(count($article->comments) == 0)
+                    <div class="bg-white mt-3 p-6">
+                        <p class="text-gray-700">Aucun commentaire pour le moment.</p>
+                    </div>
+                @else
+                    @foreach ($article->comments as $comment)
+                        <div class="mt-3 p-6 bg-gray-100 rounded-lg">
+                            <div class="flex flex-inline">
+                                <p class="text-gray-700 mb-3 font-semibold mr-2">{{$comment->user->name}} </p>
+                                <p>{{$comment->created_at->format('d/m/Y')}} à {{$comment->created_at->format('H:i')}}</p>
+                            </div>
+                            <p class="text-gray-700">{{$comment->content}}</p>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+
+            <!-- Ajout d'un commentaire -->
+
+            <div>
+                <form action="{{ route('comments.store') }}" method="post" class="mt-6">
+                    @csrf
+                    <input type="hidden" name="articleId" value="{{ $article->id }}">
+                    <div class="p-6 pt-0 text-gray-900 ">
+                        <textarea rows="5" name="content" id="content" placeholder="Contenu du commentaires" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 resize-none"></textarea>
+                    </div>
+                    <div class="p-6 pt-0 text-gray-900 ">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Publier
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endauth
 </x-guest-layout>
