@@ -1,7 +1,7 @@
 <x-articles-layout>
     <div>
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Liste de mes articles
+            Liste des articles de {{$user->name}}
         </h2>
     </div>
     <div>
@@ -9,21 +9,26 @@
         @foreach ($articles as $article)
             <div class="bg-white mt-3 flex justify-between">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <!-- Titre -->
                     <div>
                         <h2 class="text-2xl font-bold mr-5">{{ $article->title }}</h2>
                     </div>
+                    <!-- Date de publication et auteur -->
                     <div class="text-gray-500 text-sm mt-3">
                         Publié le {{ $article->created_at->format('d/m/Y') }} par <a href="{{ route('public.index', $article->user->id) }}">{{ $article->user->name }}</a>
                     </div>
+                    <!-- Catégories -->
                     <div class="flex flex-inline">
                         @foreach($article->categories as $category)
                             <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 mt-3">{{$category->name}}</span>
                         @endforeach
                     </div>
+                    <!-- Contenu -->
                     <p class="text-gray-700 dark:text-gray-300 mt-3 mb-3">{{ substr($article->content, 0, 200) }}...</p>
                     <a href="{{ route('public.show', [$article->user_id, $article->id]) }}" class="text-red-500 hover:text-red-700">Lire la suite</a>
                 </div>
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <!-- Bouton de like des articles -->
                     @auth
                         <a href="{{ route('article.like', $article->id) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -40,6 +45,7 @@
             <hr>
         @endforeach
     </div>
+    <!-- Pagination -->
     <div class="mt-3">
         {{ $articles->links() }}
     </div>

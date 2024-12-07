@@ -64,6 +64,8 @@ class PublicController extends Controller
         ]);
     }
 
+    // Filtre de recherche page Home
+
     public function filter(Request $request){
         $request->validate(
             [

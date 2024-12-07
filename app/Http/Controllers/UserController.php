@@ -33,7 +33,7 @@ class UserController extends Controller
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
                 'draft' => '',
-                'categories' => 'required',
+                'categories' => 'required','array'
             ],
             [
                 'required' => 'Le champ :attribute est obligatoire.',
@@ -96,6 +96,7 @@ class UserController extends Controller
 
     public function update(Request $request, Article $article)
     {
+        
         // Validation des paramètres du formulaire de modification de l'article 
 
         $request->validate(
@@ -103,12 +104,13 @@ class UserController extends Controller
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
                 'draft' => '',
-                'categories' => 'required',
+                'categories' => '',
             ],
             [
                 'required' => 'Le champ :attribute est obligatoire.',
                 'string' => 'Le champ :attribute doit être une chaîne de caractères.',
                 'max' => 'Le champ :attribute ne peut pas dépasser :max caractères.',
+                'int' => 'Le champ :attribute doit être un entier.'
             ],
             [
                 'title' => 'title',
@@ -118,6 +120,7 @@ class UserController extends Controller
             ]
         );
 
+
         if ($article->user_id !== Auth::user()->id) {
             return redirect()->route('dashboard')->with('error', 'Vous n\'avez pas le droit d\'accéder à cet article !');
         }
@@ -126,21 +129,28 @@ class UserController extends Controller
 
         // Titre
 
-        $data['title'] = $request->title;
+        $article->title = $request->title;
         
         // Contenu 
 
-        $data['content'] = $request->content;
+        $article->content = $request->content;
 
+        // Créateur de l'article (auteur)
 
-        $data['draft'] = isset($request->draft) ? 1 : 0;
+        $article->user_id = Auth::user()->id;
 
+        // Brouillon
 
-        $article->update($data);
+        $article->draft = isset($request->draft) ? 1 : 0;
+        
+        $article->save();
+
 
         // Associer l'article à une/plusieurs catégorie une fois modifié
 
-        $article->categories()->sync($article_categories['categories']);
+        if(!$article_categories == []){
+            $article->categories()->sync($article_categories['categories']);
+        }
 
         return redirect()->route('dashboard')->with('success', 'Article mis à jour !');
     }

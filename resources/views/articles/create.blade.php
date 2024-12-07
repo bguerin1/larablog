@@ -15,8 +15,6 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                
-
                 <!-- Affichage message flash de type "error" -->
                 @if($errors->any())
                     <div class="alert alert-danger">
@@ -29,20 +27,16 @@
                 @endif
 
                 <!-- Titre de l'article --> 
-                
                 <div class="p-6 text-gray-900 ">
                    <input type="text" name="title" id="title" placeholder="Titre de l'article" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 </div>
 
                 <!-- Contenu de l'article -->
-
-
                 <div class="p-6 pt-0 text-gray-900 ">
                    <textarea rows="30" name="content" id="content" placeholder="Contenu de l'article" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
                 </div>
 
                 <!-- Catégories de l'article --> 
-
                 <div class="p-6 pt-0 text-gray-900" style="height:100px;">
                     <select name="categories[]" id="categories" multiple="" data-hs-select='{
                         "placeholder": "Sélectionner une ou plusieurs catégories...",
@@ -59,17 +53,13 @@
                         @endforeach
                     </select>
                 </div>
-
                 <div class="p-6 text-gray-900 flex items-center">
                     <!-- Option : mettre en brouillon l'article -->
-                     
                     <div class="grow">
                         <input type="checkbox" name="draft" id="draft" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         <label for="draft">Article en brouillon</label>
                     </div>
-
-                    <!-- Envoi du formulaire de création --> 
-
+                    <!-- Envoi du formulaire de création -->
                     <div>
                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Créer l'article

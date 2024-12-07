@@ -9,8 +9,26 @@
         @csrf
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <!-- Affichage message flash de type "success" -->
+                @if (session('success'))
+                    <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                
+
+                <!-- Affichage message flash de type "error" -->
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled text-start m-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="p-6 text-gray-900">
-                   <!-- Input de titret de l'article -->
+                   <!-- Titre de l'article -->
                    <input type="text" value="{{ $article->title }}" name="title" id="title" placeholder="Titre de l'article" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 </div>
 
@@ -20,7 +38,6 @@
                 </div>
                  
                 <!-- Catégories de l'article --> 
-
                 <div class="p-6 pt-0 text-gray-900" style="height:100px;">
                     <select name="categories[]" id="categories" multiple="" data-hs-select='{
                         "placeholder": "Sélectionner une ou plusieurs catégories...",
@@ -39,10 +56,14 @@
                 </div>
 
                 <div class="p-6 text-gray-900 flex items-center">
-                    
                 <!-- Action sur le formulaire -->
+                    <!-- Option : mettre en brouillon l'article -->
                     <div class="grow">
-                        <input type="checkbox" name="draft" id="draft"  class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        @if($article->draft == 1)
+                            <input type="checkbox" name="draft" id="draft"  class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" checked>
+                        @else 
+                            <input type="checkbox" name="draft" id="draft"  class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        @endif
                         <label for="draft">Article en brouillon</label>
                     </div>
                 
