@@ -55,4 +55,12 @@ class CommentController extends Controller
             return redirect()->route('login')->with('error','Vous devez être connecté pour ajouter un commentaire !');
         }
     }
+
+    public function removeComments(Comment $comment){
+        if($comment->article->user_id != Auth::user()->id){
+            return redirect()->back()->with('error', 'Ce commentaire est indisponible !');
+        }
+        $comment->delete();
+        return redirect()->back()->with('success', 'Commentaire supprimé !');
+    }
 }

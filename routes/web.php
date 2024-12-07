@@ -33,19 +33,26 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/articles/{article}/like/', [PublicController::class, 'like'])->name('article.like')->middleware('throttle:3,1');
 
-    // Filtre de catégories des articles 
-
-    Route::get('/articles/filter/', [PublicController::class, 'filter'])->name('articles.filter');
-
     // Ajout de commentaires
 
     Route::post('/comments/store', [CommentController::class, 'store'])->middleware('throttle:3,1')->name('comments.store');
+
+    // Suppression des commentaires de notre article 
+
+    Route::get('/comments/{comments}/remove', [CommentController::class, 'removeComments'])->name('comments.remove');
 
 });
 
 require __DIR__.'/auth.php'; 
 
 // Partie publique 
+
+// Filtre de catégories des articles 
+Route::get('/articles/filter/', [PublicController::class, 'filter'])->name('articles.filter');
+
+// Recherche d'articles 
+Route::get('/articles/search/', [PublicController::class, 'search'])->name('articles.search');
+
 
 Route::get('/{user}', [PublicController::class, 'index'])->name('public.index');
 Route::get('/{user}/{article}', [PublicController::class, 'show'])->name('public.show');
