@@ -27,6 +27,13 @@
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-2">
                     {{ __('Mes articles') }}
                 </h2>
+                @if(count($articles) == 0)
+                    <div class="bg-white overflow-hidden sm:rounded-lg mt-4">
+                        <div class="p-6 text-gray-900">
+                            <h2>Vous n'avez pas d'article.</h2>
+                        </div>
+                    </div>
+                @endif
                 @foreach($articles as $article)
                     <div class="bg-white overflow-hidden sm:rounded-lg mt-4">
                         <div class="p-6 text-gray-900">
