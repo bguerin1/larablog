@@ -165,8 +165,8 @@ class UserController extends Controller
         $article->categories()->detach();
 
         // Suppression des commentaires associés
-        
-        $article->comments()->detach();
+
+        $article->comments()->delete();
 
         // Suppression de l'article 
 
